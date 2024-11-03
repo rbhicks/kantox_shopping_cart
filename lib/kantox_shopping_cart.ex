@@ -3,16 +3,16 @@ defmodule KantoxShoppingCart do
   Documentation for `KantoxShoppingCart`.
   """
 
-  @doc """
-  Hello world.
+  use Application
+  
+  def start(_type, _args) do
+    children = []
+    Supervisor.start_link(children, strategy: :one_for_one)
 
-  ## Examples
+    "==============================" |> IO.puts
+    "KantoxShoppingCart starting..." |> IO.puts
+    "==============================" |> IO.puts
 
-      iex> KantoxShoppingCart.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    {:ok, self()}
   end
 end
