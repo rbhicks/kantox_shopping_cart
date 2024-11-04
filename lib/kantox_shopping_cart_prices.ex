@@ -1,6 +1,7 @@
 defmodule KantoxShoppingCartPrices do
 
-  use GenServer
+
+#  use GenServer
   
   @moduledoc """
   Default Prices in the following format:
