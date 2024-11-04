@@ -66,7 +66,7 @@ defmodule KantoxShopping.Checkout do
   end
 
   defp get_subtotal({item_code, 1}, product_information) do
-    {_, base_price, _} = Map.get(product_information, item_code)
+    {_, base_price, _, _} = Map.get(product_information, item_code)
     base_price
   end
 
@@ -74,7 +74,7 @@ defmodule KantoxShopping.Checkout do
 
   defp get_discounted_pairs_and_base_price(item_code_count, product_information) do
     discounted_pairs = item_code_count / 2
-    {_, base_price, _} = Map.get(product_information, :gr1)
+    {_, base_price, _, _} = Map.get(product_information, :gr1)
 
     {discounted_pairs, base_price}
   end
