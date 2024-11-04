@@ -1,7 +1,7 @@
-defmodule KantoxShoppingPrices do
+defmodule KantoxShopping.Prices do
 
 
-#  use GenServer
+  use GenServer
   
   @moduledoc """
   Default Prices in the following format:
@@ -13,5 +13,14 @@ defmodule KantoxShoppingPrices do
   {CF1, Coffee, 11.23, GBP}
   """
 
+  def start_link(_args) do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  end
+
+
+  def init(args) do
+    {:ok, args}
+  end
+  
   
 end

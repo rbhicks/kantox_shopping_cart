@@ -6,7 +6,8 @@ defmodule KantoxShopping.Application do
   use Application
   
   def start(_type, _args) do
-    children = []
+    children = [KantoxShopping.Prices]
+    
     Supervisor.start_link(children, strategy: :one_for_one)
 
     "==============================" |> IO.puts
