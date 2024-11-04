@@ -47,9 +47,9 @@ defmodule KantoxShopping.Checkout do
   end
 
   defp get_subtotal({:gr1, item_code_count}, product_information) when (item_code_count / 2) > 1 do
-    {_, base_price, _} = Map.get(product_information, :gr1)
-    discounted_pairs = item_code_count / 2
-    |> trunc
+
+    {discounted_pairs, base_price} = get_discounted_pairs_and_base_price(item_code_count, product_information)
+    discounted_pairs = discounted_pairs |> trunc
 
     # since this function head requires that (item_code_count / 2) > 1
     # it means we have an odd number. discounted_pairs counts each pair
@@ -59,10 +59,23 @@ defmodule KantoxShopping.Checkout do
     (discounted_pairs * base_price) + base_price
   end
 
+  defp get_subtotal({:gr1, item_code_count}, product_information) when rem(item_code_count, 2) == 0 do
+    {discounted_pairs, base_price} = get_discounted_pairs_and_base_price(item_code_count, product_information)
+
+    discounted_pairs * base_price
+  end
+
   defp get_subtotal({item_code, 1}, product_information) do
     {_, base_price, _} = Map.get(product_information, item_code)
     base_price
   end
 
   defp get_subtotal({_item_code, _item_code_count}, _product_information), do: 0
+
+  defp get_discounted_pairs_and_base_price(item_code_count, product_information) do
+    discounted_pairs = item_code_count / 2
+    {_, base_price, _} = Map.get(product_information, :gr1)
+
+    {discounted_pairs, base_price}
+  end
 end
