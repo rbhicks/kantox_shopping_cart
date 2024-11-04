@@ -49,6 +49,17 @@ defmodule KantoxShoppingCheckoutTest do
 
         assert 16.61 == GenServer.call(KantoxShopping.Checkout, :get_total)
       end
+
+      it "Basket: GR1,CF1,SR1,CF1,CF1 should be 30.57" do
+        GenServer.cast(KantoxShopping.Checkout, :clear_item_codes)
+        GenServer.cast(KantoxShopping.Checkout, {:add_item_code, :gr1})
+        GenServer.cast(KantoxShopping.Checkout, {:add_item_code, :cf1})
+        GenServer.cast(KantoxShopping.Checkout, {:add_item_code, :sr1})
+        GenServer.cast(KantoxShopping.Checkout, {:add_item_code, :cf1})
+        GenServer.cast(KantoxShopping.Checkout, {:add_item_code, :cf1})
+
+        assert 30.57  == GenServer.call(KantoxShopping.Checkout, :get_total)
+      end
     end
   end
 end
