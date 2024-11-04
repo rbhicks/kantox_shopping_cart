@@ -17,10 +17,14 @@ defmodule KantoxShopping.Prices do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-
-  def init(args) do
-    {:ok, args}
+  def init(_args) do
+    {:ok, load_current_prices()}
   end
-  
+
+  def handle_call(:get_current_prices, _from, current_prices) do
+    {:reply, current_prices, current_prices}
+  end
+
+  defp load_current_prices, do: Application.fetch_env!(:kantox_shopping, :product_information)
   
 end
