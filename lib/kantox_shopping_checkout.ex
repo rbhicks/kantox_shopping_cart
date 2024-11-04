@@ -65,6 +65,12 @@ defmodule KantoxShopping.Checkout do
     discounted_pairs * base_price
   end
 
+  defp get_subtotal({:sr1, item_code_count}, product_information) when item_code_count >= 3 do
+    {_, _, discounted_price, _} = Map.get(product_information, :sr1)
+    
+    discounted_price * item_code_count
+  end
+  
   defp get_subtotal({item_code, 1}, product_information) do
     {_, base_price, _, _} = Map.get(product_information, item_code)
     base_price
