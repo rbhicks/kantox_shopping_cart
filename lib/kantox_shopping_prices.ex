@@ -1,4 +1,4 @@
-defmodule KantoxShopping.Prices do
+defmodule KantoxShopping.ProductInformation do
 
 
   use GenServer
@@ -23,8 +23,8 @@ defmodule KantoxShopping.Prices do
     {:ok, load_current_prices()}
   end
 
-  def handle_call(:get_current_prices, _from, current_prices) do
-    {:reply, current_prices, current_prices}
+  def handle_call(:get_current_product_information, _from, current_product_information) do
+    {:reply, current_product_information, current_product_information}
   end
 
   defp load_current_prices, do: Application.fetch_env!(:kantox_shopping, :product_information)
