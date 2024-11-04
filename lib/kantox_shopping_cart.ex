@@ -1,6 +1,6 @@
-defmodule KantoxShoppingCart do
+defmodule KantoxShopping do
   @moduledoc """
-  Documentation for `KantoxShoppingCart`.
+  Documentation for `KantoxShopping`.
   """
 
   use Application
@@ -10,7 +10,7 @@ defmodule KantoxShoppingCart do
     Supervisor.start_link(children, strategy: :one_for_one)
 
     "==============================" |> IO.puts
-    "KantoxShoppingCart starting..." |> IO.puts
+    "KantoxShopping starting..." |> IO.puts
     "==============================" |> IO.puts
 
     {:ok, self()}

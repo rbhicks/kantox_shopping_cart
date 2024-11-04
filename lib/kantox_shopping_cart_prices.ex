@@ -1,4 +1,4 @@
-defmodule KantoxShoppingCartPrices do
+defmodule KantoxShoppingPrices do
 
 
 #  use GenServer
