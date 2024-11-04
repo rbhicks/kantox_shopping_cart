@@ -1,6 +1,6 @@
 defmodule KantoxShoppingPricesTest do
   use ExSpec
-  doctest KantoxShoppingPrices
+  doctest KantoxShopping.Prices
 
   # test "greets the world" do
   #   assert KantoxShoppingCart.hello() == :world
