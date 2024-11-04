@@ -4,15 +4,15 @@ defmodule KantoxShopping.Application do
   """
 
   use Application
-  
+
   def start(_type, _args) do
     children = [KantoxShopping.ProductInformation, KantoxShopping.Checkout]
-    
+
     Supervisor.start_link(children, strategy: :one_for_one)
 
-    "==============================" |> IO.puts
-    "KantoxShopping starting..." |> IO.puts
-    "==============================" |> IO.puts
+    "==============================" |> IO.puts()
+    "KantoxShopping starting..." |> IO.puts()
+    "==============================" |> IO.puts()
 
     {:ok, self()}
   end

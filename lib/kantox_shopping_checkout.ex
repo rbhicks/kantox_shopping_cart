@@ -1,8 +1,6 @@
 defmodule KantoxShopping.Checkout do
-
-
   use GenServer
-  
+
   @moduledoc """
   """
 
@@ -35,22 +33,24 @@ defmodule KantoxShopping.Checkout do
   # more complex logic. right now, it just
   # calls the above.
   defp clear_item_codes(_item_codes), do: clear_item_codes()
-  
+
   defp get_total(item_codes) do
-    product_information = GenServer.call(KantoxShopping.ProductInformation, :get_current_product_information)
-    
+    product_information =
+      GenServer.call(KantoxShopping.ProductInformation, :get_current_product_information)
+
     item_codes
     |> Enum.frequencies()
     |> Enum.reduce(0, fn item_code_frequency, total ->
       total + get_subtotal(item_code_frequency, product_information)
     end)
-    |> Float.round(2)    
+    |> Float.round(2)
   end
 
   # green tea discount rule for odd numbers
-  defp get_subtotal({:gr1, item_code_count}, product_information) when (item_code_count / 2) > 1 do
+  defp get_subtotal({:gr1, item_code_count}, product_information) when item_code_count / 2 > 1 do
+    {discounted_pairs, base_price} =
+      get_discounted_pairs_and_base_price_for_green_tea(item_code_count, product_information)
 
-    {discounted_pairs, base_price} = get_discounted_pairs_and_base_price_for_green_tea(item_code_count, product_information)
     discounted_pairs = discounted_pairs |> trunc
 
     # since this function head requires that (item_code_count / 2) > 1
@@ -58,40 +58,42 @@ defmodule KantoxShopping.Checkout do
     # as one item and then we add one more because it's an add number;
     # i.e., as we have an odd number, once when account for all the pairs,
     # an even number, we need to add one more: 2n + 1 is an odd number.
-    (discounted_pairs * base_price) + base_price
+    discounted_pairs * base_price + base_price
   end
 
   # green tea discount rule for even numbers
-  defp get_subtotal({:gr1, item_code_count}, product_information) when rem(item_code_count, 2) == 0 do
-    {discounted_pairs, base_price} = get_discounted_pairs_and_base_price_for_green_tea(item_code_count, product_information)
+  defp get_subtotal({:gr1, item_code_count}, product_information)
+       when rem(item_code_count, 2) == 0 do
+    {discounted_pairs, base_price} =
+      get_discounted_pairs_and_base_price_for_green_tea(item_code_count, product_information)
 
     discounted_pairs * base_price
   end
 
   # strawberry discount rule
   defp get_subtotal({:sr1, item_code_count}, product_information) when item_code_count >= 3 do
-    {_, _, discounted_price, _,  _} = Map.get(product_information, :sr1)
-    
+    {_, _, discounted_price, _, _} = Map.get(product_information, :sr1)
+
     discounted_price * item_code_count
   end
 
   # coffee discount rule
   defp get_subtotal({:cf1, item_code_count}, product_information) when item_code_count >= 3 do
     {_, base_price, _, discount_multiplier, _} = Map.get(product_information, :cf1)
-    
-    (base_price * item_code_count * discount_multiplier)
+
+    base_price * item_code_count * discount_multiplier
   end
 
   # non-discounted subtotal rule for everything
   defp get_subtotal({item_code, item_code_count}, product_information) do
-    {_, base_price, _,  _, _} = Map.get(product_information, item_code)
+    {_, base_price, _, _, _} = Map.get(product_information, item_code)
     base_price * item_code_count
   end
 
   # utility function to avoid code duplication
   defp get_discounted_pairs_and_base_price_for_green_tea(item_code_count, product_information) do
     discounted_pairs = item_code_count / 2
-    {_, base_price, _,  _, _} = Map.get(product_information, :gr1)
+    {_, base_price, _, _, _} = Map.get(product_information, :gr1)
 
     {discounted_pairs, base_price}
   end

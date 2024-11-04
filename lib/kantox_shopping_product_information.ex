@@ -1,8 +1,6 @@
 defmodule KantoxShopping.ProductInformation do
-
-
   use GenServer
-  
+
   @moduledoc """
   Default Prices in the following format:
 
@@ -28,5 +26,4 @@ defmodule KantoxShopping.ProductInformation do
   end
 
   defp load_current_prices, do: Application.fetch_env!(:kantox_shopping, :product_information)
-  
 end
