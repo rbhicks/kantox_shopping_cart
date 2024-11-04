@@ -2,8 +2,14 @@ defmodule KantoxShopping.Checkout do
   use GenServer
 
   @moduledoc """
-  Maintains the shopping cart state and calculates the totals via the discount rules. The biggest issue that would need to be addressed in future would be to add support for multiple shopping carts. Essestially, the same logic, but with the state being a map with individual keys.
-  It's possible that certain rules could be made generic, for instance, the "two for one" rule is currently specific to green tea, but there may be a future product that would use the same logic. This could be easily solved by breaking the logic out into a utility function and using multiple function heads, based on the item code, and calling the utility function.
+  Maintains the shopping cart state and calculates the totals via the discount rules.
+  The biggest issue that would need to be addressed in future would be to add support
+  for multiple shopping carts. Essestially, the same logic, but with the state being
+  a map with individual keys. It's possible that certain rules could be made generic,
+  for instance, the "two for one" rule is currently specific to green tea, but there
+  may be a future product that would use the same logic. This could be easily solved
+  by breaking the logic out into a utility function and using multiple function heads,
+  based on the item code, and calling the utility function.
   """
 
   def start_link(_args) do
