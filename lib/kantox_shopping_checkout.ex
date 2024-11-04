@@ -13,4 +13,10 @@ defmodule KantoxShopping.Checkout do
   def init(_args) do
     {:ok, []}
   end
+
+  def handle_call(:add_item, _from, items) do
+  end
+
+  def handle_call(:get_total, _from, items) do
+  end
 end
