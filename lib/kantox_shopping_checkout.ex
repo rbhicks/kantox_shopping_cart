@@ -10,6 +10,10 @@ defmodule KantoxShopping.Checkout do
   may be a future product that would use the same logic. This could be easily solved
   by breaking the logic out into a utility function and using multiple function heads,
   based on the item code, and calling the utility function.
+
+  N.B.: the prices were quoted in GBP, the calculations are made and the total
+  returned simply as floats. However, the currency code is maintained so it could
+  in theory be displayed, converted, etc.
   """
 
   def start_link(_args) do

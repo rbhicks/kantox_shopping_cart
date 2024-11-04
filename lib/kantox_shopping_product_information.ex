@@ -11,6 +11,10 @@ defmodule KantoxShopping.ProductInformation do
     sr1: {"Strawberries", 5.00, 4.50, nil, :gbp},
     cf1: {"Coffee", 11.23, nil, 0.66, :gbp}
   }
+
+  N.B.: the prices were quoted in GBP, the calculations are made and the total
+  returned simply as floats. However, the currency code is maintained so it could
+  in theory be displayed, converted, etc.
   """
 
   def start_link(_args) do
