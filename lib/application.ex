@@ -1,4 +1,4 @@
-defmodule KantoxShopping do
+defmodule KantoxShopping.Application do
   @moduledoc """
   Documentation for `KantoxShopping`.
   """
