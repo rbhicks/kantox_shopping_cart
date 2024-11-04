@@ -44,6 +44,7 @@ defmodule KantoxShopping.Checkout do
     |> Enum.reduce(0, fn item_code_frequency, total ->
       total + get_subtotal(item_code_frequency, product_information)
     end)
+    |> Float.round(2)    
   end
 
   defp get_subtotal({:gr1, item_code_count}, product_information) when (item_code_count / 2) > 1 do
@@ -76,14 +77,19 @@ defmodule KantoxShopping.Checkout do
     
     base_price * item_code_count
   end
+
+  defp get_subtotal({:cf1, item_code_count}, product_information) when item_code_count >= 3 do
+    {_, base_price, _, discount_multiplier, _} = Map.get(product_information, :cf1)
+    
+    (base_price * item_code_count * discount_multiplier)
+  end
   
-  defp get_subtotal({item_code, 1}, product_information) do
+  defp get_subtotal({item_code, item_code_count}, product_information) do
     {_, base_price, _,  _, _} = Map.get(product_information, item_code)
-    base_price
+    base_price * item_code_count
   end
 
-  defp get_subtotal({_item_code, _item_code_count}, _product_information), do: 0
-
+  # utility function to avoid code duplication
   defp get_discounted_pairs_and_base_price(item_code_count, product_information) do
     discounted_pairs = item_code_count / 2
     {_, base_price, _,  _, _} = Map.get(product_information, :gr1)
