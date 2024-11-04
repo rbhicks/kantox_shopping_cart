@@ -6,12 +6,12 @@ defmodule KantoxShopping.ProductInformation do
   @moduledoc """
   Default Prices in the following format:
 
-  %{product_code: {name, price, ISO currency code}}
+  %{product_code: {name, price, discounted price (nil if n/a), ISO currency code}}
 
   %{
-    gr1: {"Green Tea", 3.11, :gbp},
-    sr1: {"Strawberries", 5.00, :gbp},
-    cf1: {"Coffee", 11.23, :gbp}
+    gr1: {"Green Tea", 3.11, nil, :gbp},
+    sr1: {"Strawberries", 5.00, 4.50, :gbp},
+    cf1: {"Coffee", 11.23, nil, :gbp}
   }
   """
 
